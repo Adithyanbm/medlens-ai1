@@ -28,7 +28,6 @@ const SafetyTrendChart: React.FC<SafetyTrendChartProps> = ({ data }) => {
 
     // Scales
     const maxScore = 100;
-    const minScore = 0;
 
     // Points calculation
     const points = sortedData.map((d, i) => {

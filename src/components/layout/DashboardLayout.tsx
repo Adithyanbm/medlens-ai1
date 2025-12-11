@@ -5,10 +5,8 @@ import AIChatbot from '../chat/AIChatbot';
 import {
     Bell,
     Search,
-    User,
     ChevronDown,
-    Menu,
-    X
+    Menu
 } from 'lucide-react';
 
 interface DashboardLayoutProps {

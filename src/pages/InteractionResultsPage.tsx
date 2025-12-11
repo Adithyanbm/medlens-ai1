@@ -5,7 +5,6 @@ import {
     CheckCircle2,
     Info,
     Download,
-    Share2,
     ArrowLeft,
     Pill,
     AlertCircle,

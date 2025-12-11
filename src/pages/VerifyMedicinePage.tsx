@@ -1,13 +1,9 @@
 import { useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { verifyMedicine, VerificationResult } from '../services/ollamaApi';
 import {
-    Upload,
-    Image,
     FileText,
     X,
-    Loader2,
     CheckCircle2,
     AlertTriangle,
     ShieldCheck,
@@ -17,7 +13,6 @@ import {
 } from 'lucide-react';
 
 const VerifyMedicinePage = () => {
-    const navigate = useNavigate();
     const [file, setFile] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
     const [isDragging, setIsDragging] = useState(false);
@@ -115,8 +110,8 @@ const VerifyMedicinePage = () => {
                                 onDragLeave={handleDragLeave}
                                 onDrop={handleDrop}
                                 className={`relative border-2 border-dashed rounded-2xl p-8 text-center transition-all h-80 flex flex-col items-center justify-center ${isDragging
-                                        ? 'border-primary-500 bg-primary-50'
-                                        : 'border-gray-300 bg-white hover:border-primary-400 hover:bg-gray-50'
+                                    ? 'border-primary-500 bg-primary-50'
+                                    : 'border-gray-300 bg-white hover:border-primary-400 hover:bg-gray-50'
                                     }`}
                             >
                                 <input
@@ -208,8 +203,8 @@ const VerifyMedicinePage = () => {
                             <div className="space-y-6 animate-fadeIn">
                                 {/* Main Status Card */}
                                 <div className={`p-8 rounded-2xl border-2 text-center shadow-lg ${result.isLikelyAuthentic
-                                        ? 'bg-green-50 border-green-200 shadow-green-100'
-                                        : 'bg-red-50 border-red-200 shadow-red-100'
+                                    ? 'bg-green-50 border-green-200 shadow-green-100'
+                                    : 'bg-red-50 border-red-200 shadow-red-100'
                                     }`}>
                                     <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 ${result.isLikelyAuthentic ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'
                                         }`}>
@@ -227,16 +222,16 @@ const VerifyMedicinePage = () => {
 
                                     <div className="flex justify-center gap-4 mt-4 text-sm font-medium">
                                         <span className={`px-3 py-1 rounded-full border ${result.isLikelyAuthentic
-                                                ? 'bg-green-100 border-green-200 text-green-700'
-                                                : 'bg-red-100 border-red-200 text-red-700'
+                                            ? 'bg-green-100 border-green-200 text-green-700'
+                                            : 'bg-red-100 border-red-200 text-red-700'
                                             }`}>
                                             Confidence: {result.confidence}%
                                         </span>
                                         <span className={`px-3 py-1 rounded-full border ${result.riskLevel === 'low'
-                                                ? 'bg-green-100 border-green-200 text-green-700'
-                                                : result.riskLevel === 'medium'
-                                                    ? 'bg-yellow-100 border-yellow-200 text-yellow-700'
-                                                    : 'bg-red-100 border-red-200 text-red-700'
+                                            ? 'bg-green-100 border-green-200 text-green-700'
+                                            : result.riskLevel === 'medium'
+                                                ? 'bg-yellow-100 border-yellow-200 text-yellow-700'
+                                                : 'bg-red-100 border-red-200 text-red-700'
                                             }`}>
                                             Risk: {result.riskLevel.toUpperCase()}
                                         </span>
