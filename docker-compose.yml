@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: medlens-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: medlens
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - medlens-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: medlens-backend
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - MONGO_URI=mongodb://mongodb:27017/medlens
+      - JWT_SECRET=${JWT_SECRET:-medlens-secret-key-change-this-in-prod}
+      - MODE=${MODE:-demo}
+      - OLLAMA_API_KEY=${OLLAMA_API_KEY:-}
+    depends_on:
+      - mongodb
+    networks:
+      - medlens-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: medlens-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - medlens-network
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  medlens-network:
+    driver: bridge
