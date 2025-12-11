@@ -72,7 +72,14 @@ const demoResponses = {
             interactions.push({ drugA: 'Aspirin', drugB: 'Warfarin', severity: 'severe', description: 'Bleeding risk.', management: 'Avoid.' });
         }
         return { interactions, safetyScore: interactions.length ? 45 : 95 };
-    }
+    },
+    verifyMedicine: () => ({
+        isLikelyAuthentic: true,
+        confidence: 92,
+        riskLevel: 'low',
+        issues: [],
+        analysis: 'The packaging features appear consistent with genuine products. (Demo Mode)'
+    })
 };
 
 // --- Routes ---
@@ -275,6 +282,11 @@ app.post('/api/verify-medicine', authenticateToken, async (req, res) => {
     try {
         const { imageBase64 } = req.body;
         if (!imageBase64) return res.status(400).json({ error: 'No image' });
+
+        if (MODE === 'demo') {
+            await new Promise(r => setTimeout(r, 1500)); // Simulate delay
+            return res.json(demoResponses.verifyMedicine());
+        }
 
         const systemPrompt = `Analyze for counterfeits. JSON: { "isLikelyAuthentic": true, "confidence": 90, "riskLevel": "low", "issues": [], "analysis": "Looks good" }`;
         const response = await fetch(`${OLLAMA_CONFIG.baseUrl}/chat`, {
